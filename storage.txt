@@ -1,0 +1,812 @@
+
+  {
+    tabBarPosition: 'top',
+    swipeEnabled: true,
+    animationEnabled: true,
+    tabBarOptions: {
+      activeTintColor: '#FFFFFF',
+      inactiveTintColor: '#F8F8F8',
+      style: {
+        backgroundColor: '#335182',
+        paddingTop: 150,
+      },
+      labelStyle: {
+        textAlign: 'center',
+      },
+      indicatorStyle: {
+        borderBottomColor: '#87B56A',
+        borderBottomWidth: 2,
+      },
+    },
+  },
+
+        name: 'NFL',
+        avatar: 'https://icon-library.net/images/nfl-icon/nfl-icon-29.jpg'
+    },
+    {
+        name: 'NBA',
+        avatar: 'https://www.stickpng.com/assets/images/58428defa6515b1e0ad75ab4.png'
+    },
+    {
+        name: 'MLB',
+        avatar: 'https://freepngimg.com/download/major_league_baseball/29831-5-mlb-file.png'
+    },
+    {
+        name: 'NHL',
+        avatar: 'https://upload.wikimedia.org/wikipedia/sco/thumb/3/3a/05_NHL_Shield.svg/527px-05_NHL_Shield.svg.png'
+    },
+
+// Setting screen
+import React, { Component, Fragment } from 'react';
+//import react in our code.
+import { Text, View, StyleSheet, Image } from 'react-native';
+//import all the components we are going to use.
+
+import { ImageBackground } from 'react-native';
+
+import ImageOverlay from 'react-native-image-overlay';
+
+import { Card } from 'react-native-elements';
+
+import { Paper } from './NativePaper';
+
+import { Divider } from 'react-native-paper';
+
+import SportSave from './SportScreen';
+
+
+
+export default class Sports extends Component {
+    state = {
+        text: ''
+    };
+    render() {
+        return (
+            <View>
+                <ImageBackground blurRadius={10} source={require('./photo/arena1.jpg')} style={{width: '100%', height: '100%'}}>
+                    <View style={s.overlay}>
+                        <View style={{paddingTop: 100}}>
+                            <SportSave />
+                        </View>
+                       <SportSave />
+
+
+                    </View>
+
+                </ImageBackground>
+            </View>
+        );
+    }
+}
+
+const s = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#335182',
+    opacity: 0.7
+  }
+});
+
+
+//////
+
+
+const MOCK_DATA = [
+  {
+    id: "1",
+    title: <Image style={{width: 200, height: 100}} source={{uri: 'http://content.sportslogos.net/logos/7/153/full/318.png'}}/>,
+    description: "fuck you asshole"
+  },
+  {
+    id: "2",
+    title: "Carousel",
+    description:
+                    <Image style={{flex: 1}} resizeMode='cover' source={{uri: 'http://content.sportslogos.net/logos/7/153/full/318.png'}}></Image>
+
+  },
+  {
+    id: "3",
+    title: "Carousel",
+    description: "A handy component for React Native"
+  },
+  {
+    id: "4",
+    title: "Carousel",
+    description: "A handy component for React Native"
+  },
+  {
+    id: "5",
+    title: "Carousel",
+    description: "A handy component for React Native"
+  }
+];
+
+
+class HomePage extends Component {
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text> Home Page </Text>
+                <Carousel
+                    style={styles.carousel}
+                    data={MOCK_DATA}
+                    renderItem={info => (
+                        <View>
+                            <Text style={styles.title}>{info.item.title}</Text>
+                            <Text style={styles.description}>{info.item.description}</Text>
+                        </View>
+                    )}
+                    keyExtractor={item => item.id}
+                />
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
+  },
+  carousel: {
+    maxHeight: 200,
+    maxWidth: "100%"
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 0
+  },
+  description: {
+    fontSize: 17,
+    marginBottom: 10,
+    fontWeight: "normal",
+    color: "#666"
+  }
+});
+
+
+
+////
+
+import React, { Component } from 'react';
+
+//For React Navigation Version 3+
+
+import {
+  createAppContainer
+  } from 'react-navigation';
+
+import { createStackNavigator } from 'react-navigation-stack';
+
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+
+//import Navigator in our project
+
+import UserAvatar from 'react-native-user-avatar';
+
+import { LoginView } from './LogInSecondPage';
+
+import SportSave from './SportScreen';
+
+import { Teams } from './SelectTeams';
+
+import styles, { colors } from './index.style';
+
+import { ImageBackground,
+         Image,
+         View,
+         StyleSheet,
+         StatusBar,
+         Fragment,
+         Text,
+         ScrollView,
+         TouchableOpacity,
+         Dimensions,
+         Platform,
+         SafeAreaView
+         } from 'react-native'
+
+import Carousel, { ParallaxImage } from "react-native-snap-carousel";
+
+import { TopBarLogo, SignUpView } from './SignUpFirstPage';
+
+import { Button } from 'react-native-elements';
+
+import Drawer from 'react-native-circle-drawer';
+
+const { width: screenWidth } = Dimensions.get('window')
+
+import { sliderWidth, itemWidth } from './SliderEntry.style';
+
+import SliderEntry from './SliderEntry';
+
+const MOCK_DATA = [
+    {
+        title: 'Beautiful and dramatic Antelope Canyon',
+        subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+        illustration: './photo/arena1.jpg'
+    },
+    {
+        title: 'Earlier this morning, NYC',
+        subtitle: 'Lorem ipsum dolor sit amet',
+        illustration: 'https://i.imgur.com/UPrs1EWl.jpg'
+    },
+];
+
+
+class HomePage extends Component {
+
+    _renderItemWithParallax ({item, index}, parallaxProps) {
+        return (
+            <SliderEntry
+              data={item}
+              even={(index + 1) % 2 === 0}
+              parallax={false}
+              parallaxProps={parallaxProps}
+            />
+        );
+    }
+
+    render() {
+        return (
+            <View style={styles.exampleContainer}>
+
+                <Text style={styles.subtitle}>{title}</Text>
+                <Carousel
+                  ref={c => this._slider1Ref = c}
+                  data={MOCK_DATA}
+                  renderItem={this._renderItemWithParallax}
+                  sliderWidth={sliderWidth}
+                  itemWidth={itemWidth}
+                  hasParallaxImages={true}
+                  inactiveSlideScale={0.94}
+                  inactiveSlideOpacity={0.7}
+                  // inactiveSlideShift={20}
+                  containerCustomStyle={styles.slider}
+                  contentContainerCustomStyle={styles.sliderContentContainer}
+                  onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                />
+            </View>
+        );
+    }
+}
+
+
+//
+
+        return (
+            <View style={styles.exampleContainer}>
+
+                <Text style={styles.subtitle}>{title}</Text>
+                <Carousel
+                  ref={c => this._slider1Ref = c}
+                  data={MOCK_DATA}
+                  renderItem={this._renderItemWithParallax}
+                  sliderWidth={sliderWidth}
+                  itemWidth={itemWidth}
+                  hasParallaxImages={true}
+                  inactiveSlideScale={0.94}
+                  inactiveSlideOpacity={0.7}
+                  // inactiveSlideShift={20}
+                  containerCustomStyle={styles.slider}
+                  contentContainerCustomStyle={styles.sliderContentContainer}
+                  onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                />
+            </View>
+
+//////////////
+
+import React, { Component } from 'react';
+
+//For React Navigation Version 3+
+
+import {
+  createAppContainer
+  } from 'react-navigation';
+
+import { createStackNavigator } from 'react-navigation-stack';
+
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+
+//import Navigator in our project
+
+import UserAvatar from 'react-native-user-avatar';
+
+import { LoginView } from './LogInSecondPage';
+
+import SportSave from './SportScreen';
+
+import { Teams } from './SelectTeams';
+
+import styles, { colors } from './index.style';
+
+import { ImageBackground,
+         Image,
+         View,
+         StyleSheet,
+         StatusBar,
+         Fragment,
+         Text,
+         ScrollView,
+         TouchableOpacity,
+         Dimensions,
+         Platform,
+         SafeAreaView
+         } from 'react-native'
+
+import Carousel, { ParallaxImage } from "react-native-snap-carousel";
+
+import { TopBarLogo, SignUpView } from './SignUpFirstPage';
+
+import { Button } from 'react-native-elements';
+
+import Drawer from 'react-native-circle-drawer';
+
+const { width: screenWidth } = Dimensions.get('window')
+
+import { sliderWidth, itemWidth, itemHeight } from './SliderEntry.style';
+
+import SliderEntry from './SliderEntry';
+
+const MOCK_DATA = [
+    {
+        title: 'Ravens',
+        illustration: 'http://content.sportslogos.net/logos/7/153/full/318.png'
+    },
+    {
+        title: 'Chiefs',
+        illustration: 'https://i.pinimg.com/originals/e6/7f/4f/e67f4fd39305d4c5fdd5d9b7ff3a629e.jpg'
+    },
+    {
+        title: 'Saints',
+        illustration: 'https://i.pinimg.com/originals/85/ba/53/85ba534d7994fbb0d9f264457979d134.jpg'
+    },
+    {
+        title: 'Rams',
+        illustration: 'https://fanatics.frgimages.com/FFImage/thumb.aspx?i=/productimages/_3336000/altimages/ff_3336015-333d57bebbf61e2c5349alt1_full.jpg&w=900'
+    }
+];
+
+
+class HomePage extends Component {
+
+    _renderItemWithParallax ({item, index}, parallaxProps) {
+        return (
+            <SliderEntry
+              data={item}
+              even={(index + 1) % 2 === 0}
+              parallax={false}
+              parallaxProps={parallaxProps}
+            />
+        );
+    }
+
+    render() {
+        return (
+            <View style={styles.exampleContainer}>
+                <Carousel
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    itemHeight={itemHeight}
+                    data={MOCK_DATA}
+                    renderItem={this._renderItemWithParallax}
+                    hsaParallaxImages={true}
+                />
+
+            </View>
+        );
+    }
+}
+
+
+
+
+
+
+const StackNav1 = createStackNavigator(
+    {
+        HomeScr: {
+            screen: HomePage,
+            navigationOptions:
+            {
+                header: null,
+            },
+        },
+
+
+    },
+    { initialRouteName: 'HomeScr', }
+);
+
+const AppContainer = createAppContainer(StackNav1);
+
+export default class MainApp extends Component {
+
+    static navigationOptions = {
+        headerVisible: false,
+    }
+
+    constructor(props) {
+        super(props);
+    }
+
+    openDrawer(){
+        this.refs.DRAWER.open()
+    }
+
+    renderSideMenu() {
+        return(
+            <View style={{flex:1}}>
+                <Text>Item 1 </Text>
+                <Text>Item 2 </Text>
+            </View>
+        )
+    }
+
+    renderTopRightView(){
+        return(
+            <View>
+                <Text>Hello</Text>
+            </View>
+        )
+    }
+
+
+    render() {
+        return (
+            <Drawer
+                ref="DRAWER"
+                sideMenu={this.renderSideMenu()}
+                topRightView={this.renderTopRightView()}
+                primaryColor='#335182'
+                secondaryColor='#436aa8'
+                cancelColor='#335182'
+            >
+                <Button title="open drawer" onPress={()=>this.openDrawer()}/>
+                <AppContainer />
+            </Drawer>
+        )
+    }
+}
+
+const s = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#335182',
+    opacity: 0.7
+  }
+});
+
+
+
+
+///////
+
+
+import React, { Component } from 'react';
+
+//For React Navigation Version 3+
+
+import {
+  createAppContainer
+  } from 'react-navigation';
+
+import { createStackNavigator } from 'react-navigation-stack';
+
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+
+//import Navigator in our project
+
+import UserAvatar from 'react-native-user-avatar';
+
+import { LoginView } from './LogInSecondPage';
+
+import SportSave from './SportScreen';
+
+import { Teams } from './SelectTeams';
+
+import styles, { colors } from './index.style';
+
+import { Text } from 'react-native-elements';
+
+import { ImageBackground,
+         Image,
+         View,
+         StyleSheet,
+         StatusBar,
+         Fragment,
+         ScrollView,
+         TouchableOpacity,
+         Dimensions,
+         Platform,
+         SafeAreaView
+         } from 'react-native'
+
+import Carousel, { ParallaxImage } from "react-native-snap-carousel";
+
+import { TopBarLogo, SignUpView } from './SignUpFirstPage';
+
+import { Button } from 'react-native-elements';
+
+import Drawer from 'react-native-circle-drawer';
+
+const { width: screenWidth } = Dimensions.get('window')
+
+import { sliderWidth, itemWidth, itemHeight } from './SliderEntry.style';
+
+import SliderEntry from './SliderEntry';
+
+import { TeamCard } from './TeamCards';
+
+const MOCK_DATA = [
+    {
+        title: 'Ravens',
+        illustration: 'http://content.sportslogos.net/logos/7/153/full/318.png'
+    },
+    {
+        title: 'Chiefs',
+        illustration: 'https://i.pinimg.com/originals/e6/7f/4f/e67f4fd39305d4c5fdd5d9b7ff3a629e.jpg'
+    },
+    {
+        title: 'Saints',
+        illustration: 'https://i.pinimg.com/originals/85/ba/53/85ba534d7994fbb0d9f264457979d134.jpg'
+    },
+    {
+        title: 'Rams',
+        illustration: 'https://fanatics.frgimages.com/FFImage/thumb.aspx?i=/productimages/_3336000/altimages/ff_3336015-333d57bebbf61e2c5349alt1_full.jpg&w=900'
+    }
+];
+
+
+class HomePage extends Component {
+
+    _renderItemWithParallax ({item, index}, parallaxProps) {
+        return (
+            <SliderEntry
+              data={item}
+              even={(index + 1) % 2 === 0}
+              parallax={false}
+              parallaxProps={parallaxProps}
+            />
+        );
+    }
+
+    render() {
+        return (
+            <View>
+
+                <View style={styles.exampleContainer}>
+
+                    <TeamCard/>
+
+
+                    <View style={{paddingLeft: 20, paddingBottom: 10}}>
+                        <Text style={{color:'#1a1917', fontSize: 17}}h4>My Portfolio</Text>
+                    </View>
+
+                    <Carousel
+
+                        sliderWidth={sliderWidth}
+                        itemWidth={itemWidth}
+                        itemHeight={itemHeight}
+                        data={MOCK_DATA}
+                        renderItem={this._renderItemWithParallax}
+                        hsaParallaxImages={true}
+                    />
+
+                </View>
+
+
+
+            </View>
+        );
+    }
+}
+
+
+
+
+
+
+const StackNav1 = createStackNavigator(
+    {
+        HomeScr: {
+            screen: HomePage,
+            navigationOptions:
+            {
+                header: null,
+            },
+        },
+
+
+    },
+    { initialRouteName: 'HomeScr', }
+);
+
+const AppContainer = createAppContainer(StackNav1);
+
+export default class MainApp extends Component {
+
+    static navigationOptions = {
+        headerVisible: false,
+    }
+
+    constructor(props) {
+        super(props);
+    }
+
+    openDrawer(){
+        this.refs.DRAWER.open()
+    }
+
+    renderSideMenu() {
+        return(
+            <View style={{flex:1}}>
+                <Text>Item 1 </Text>
+                <Text>Item 2 </Text>
+            </View>
+        )
+    }
+
+    renderTopRightView(){
+        return(
+            <View>
+                <Text>Hello</Text>
+            </View>
+        )
+    }
+
+
+    render() {
+        return (
+            <Drawer
+                ref="DRAWER"
+                sideMenu={this.renderSideMenu()}
+                topRightView={this.renderTopRightView()}
+                primaryColor='#335182'
+                secondaryColor='#436aa8'
+                cancelColor='#335182'
+            >
+                <Button title="open drawer" onPress={()=>this.openDrawer()}/>
+                <AppContainer />
+            </Drawer>
+        )
+    }
+}
+
+const s = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#335182',
+    opacity: 0.7
+  }
+});
+
+
+import React, { Component } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import { ParallaxImage } from 'react-native-snap-carousel';
+import styles from './SliderEntry.style';
+import { Grid, Row } from 'react-native-elements';
+
+class SliderEntryImg extends Component {
+
+    static propTypes = {
+        data: PropTypes.object.isRequired,
+        even: PropTypes.bool,
+        parallax: PropTypes.bool,
+        parallaxProps: PropTypes.object
+    };
+
+    get image () {
+        const { data: { illustration }, parallax, parallaxProps, even } = this.props;
+
+        return parallax ? (
+            <ParallaxImage
+              source={{ uri: illustration }}
+              containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
+              style={styles.image}
+              parallaxFactor={0.35}
+              showSpinner={true}
+              {...parallaxProps}
+            />
+        ) : (
+            <Image
+              source={{ uri: illustration }}
+              style={styles.image}
+            />
+        );
+    }
+
+    render () {
+        const { data: { title, subtitle }, even } = this.props;
+
+        const uppercaseTitle = title ? (
+            <Text
+              style={[styles.title, even ? styles.titleEven : {}]}
+              numberOfLines={2}
+            >
+                { title.toUpperCase() }
+            </Text>
+        ) : false;
+
+        return (
+
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.slideInnerContainer}
+              onPress={() => { alert(`You've clicked '${title}'`); }}
+              >
+                <View style={styles.shadow} />
+                <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
+                    { this.image }
+                    <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
+                </View>
+                <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
+                    { uppercaseTitle }
+                </View>
+            </TouchableOpacity>
+        );
+    }
+}
+
+
+class SliderEntryPort extends Component {
+
+    static propTypes = {
+        data: PropTypes.object.isRequired,
+    };
+
+
+
+    render () {
+        const { data: { title, subtitle }} = this.props;
+
+        const uppercaseTitle = title ? (
+            <Text
+              style={[styles.title]}
+              numberOfLines={2}
+            >
+                { title.toUpperCase() }
+            </Text>
+        ) : false;
+
+        return (
+
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.card}
+              onPress={() => { alert(`You've clicked '${title}'`); }}
+              >
+                <View style={styles.shadow} />
+
+                <View style={[styles.textContainer]}>
+                    { uppercaseTitle }
+                </View>
+            </TouchableOpacity>
+        );
+    }
+}
+
+
+export{
+    SliderEntryImg,
+    SliderEntryPort,
+}
+
